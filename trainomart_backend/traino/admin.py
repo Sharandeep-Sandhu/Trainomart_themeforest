@@ -2,11 +2,11 @@ from django.contrib import admin
 from .models import Course, Blog, Leads
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('course_name', 'price', 'duration', 'last_updated')  # Display 'last_updated' here
-    list_filter = ('language', 'skill_level')
+    list_display = ('course_name', 'price', 'duration', 'is_featured', 'last_updated')
+    list_filter = ('is_featured', 'language', 'skill_level')
     search_fields = ('course_name', 'description')
     ordering = ('last_updated',)
-    fields = ('course_name', 'course_image', 'description', 'course_content', 'price', 'duration', 'language', 'skill_level')  # Exclude 'last_updated' from here
+    fields = ('course_name', 'course_image', 'description', 'course_content', 'price', 'duration', 'language', 'skill_level')
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('blog_title', 'blog_image')

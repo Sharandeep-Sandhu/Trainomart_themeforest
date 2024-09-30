@@ -5,7 +5,7 @@ export const menuList = [
       // { href: "/", label: "Home 1" },
       // { href: "/home-2", label: "Home 2" },
       // { href: "/home-3", label: "Home 3" },
-      { href: "/home-4", label: "Home 4" },
+      { href: "/Home", label: "Home 4" },
       // { href: "/home-5", label: "Home 5" },
       // { href: "/home-6", label: "Home 6" },
       // { href: "/home-7", label: "Home 7" },
@@ -24,7 +24,7 @@ export const menuList = [
           // { href: "/courses-list-2", label: "Course List v2" },
           // { href: "/courses-list-3", label: "Course List v3" },
           // { href: "/courses-list-4", label: "Course List v4" },
-          { href: "/courses-list-5", label: "Course List" },
+          { href: "/courses", label: "Course List" },
           // { href: "/courses-list-6", label: "Course List v6" },
           // { href: "/courses-list-7", label: "Course List v7" },
 
@@ -124,14 +124,14 @@ export const menuList = [
       {
         title: "About Us",
         links: [
-          { href: "/about-1", label: "About" },
+          { href: "/about", label: "About" },
           // { href: "/about-2", label: "About 2" },
         ],
       },
       {
         title: "Contact",
         links: [
-          { href: "/contact-1", label: "Contact 1" },
+          { href: "/contact", label: "Contact 1" },
           { href: "/contact-2", label: "Contact 2" },
         ],
       },

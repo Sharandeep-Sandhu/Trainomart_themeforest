@@ -28,7 +28,7 @@ export default function LandJob() {
               width={690}
               height={720}
               className="w-1/1"
-              src="/assets/img/home-4/dreamJob/1.png"
+              src="/assets/img/Home/dreamJob/1.png"
               alt="image"
             />
           </div>

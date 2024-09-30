@@ -16,7 +16,7 @@ export default function Sidebar() {
           <div>
             <div className="sidebar__item -is-active">
               <Link
-                href="/about-1"
+                href="/about"
                 className="-dark-sidebar-white d-flex items-center text-17 lh-1 fw-500"
               >
                 <i className="text-20 icon-discovery mr-15"></i>
@@ -108,7 +108,7 @@ export default function Sidebar() {
                     <div className="accordion__content__inner px-30 pt-15 pb-10">
                       <div className="sidebar__links y-gap-5">
                         <div>
-                          <Link href="/about-1">About v1</Link>
+                          <Link href="/about">About v1</Link>
                         </div>
                         <div>
                           <Link href="/about-2">About v2</Link>
@@ -125,7 +125,7 @@ export default function Sidebar() {
 
             <div className="">
               <Link
-                href="/contact-1"
+                href="/contact"
                 className="d-flex items-center justify-between py-15 px-20 rounded-16 text-16 lh-1 fw-500 -base-sidebar-menu-hover"
               >
                 Contact

@@ -83,7 +83,7 @@ export const paginationImages = [
 export const testimonialsTwoFour = [
   {
     id: 1,
-    image: "/assets/img/home-4/testimonials/1.png",
+    image: "/assets/img/Home/testimonials/1.png",
     rating: 4.5,
     numRatings: 1991,
     text: "I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design.",
@@ -92,7 +92,7 @@ export const testimonialsTwoFour = [
   },
   {
     id: 2,
-    image: "/assets/img/home-4/testimonials/2.png",
+    image: "/assets/img/Home/testimonials/2.png",
     rating: 4.5,
     numRatings: 1991,
     text: "I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design.",
@@ -101,7 +101,7 @@ export const testimonialsTwoFour = [
   },
   {
     id: 3,
-    image: "/assets/img/home-4/testimonials/3.png",
+    image: "/assets/img/Home/testimonials/3.png",
     rating: 4.5,
     numRatings: 1991,
     text: "I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design.",

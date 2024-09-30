@@ -52,7 +52,7 @@ export default function Menu({ allClasses, headerPosition }) {
             <li className="menu-item-has-children">
               <Link
                 data-barba
-                href="/home-4"
+                href="/Home"
                 className={menuItem == "Home" ? "activeMenu" : ""}
               >
                 Home
@@ -81,16 +81,16 @@ export default function Menu({ allClasses, headerPosition }) {
             <li className="menu-item-has-children -has-mega-menu">
               <Link
                 data-barba
-                href="#"
+                href="/courses"
                 className={menuItem == "Courses" ? "activeMenu" : ""}
               >
-                Courses <i className="icon-chevron-right text-13 ml-10"></i>
+                Courses
               </Link>
 
-              <div className="mega xl:d-none">
-                <div className="mega__menu">
+              <div className="subnav">
+                {/* <div className="mega__menu"> */}
                   <div className="row x-gap-40">
-                    <div className="col">
+                    {/* <div className="col">
                       <h4 className="text-17 fw-500 mb-20">
                         Course List Layouts
                       </h4>
@@ -111,9 +111,9 @@ export default function Menu({ allClasses, headerPosition }) {
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    </div> */}
 
-                    <div className="col">
+                    {/* <div className="col">
                       <h4 className="text-17 fw-500 mb-20">
                         Course Single Layouts
                       </h4>
@@ -134,9 +134,9 @@ export default function Menu({ allClasses, headerPosition }) {
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    </div> */}
 
-                    <div className="col">
+                    {/* <div className="col">
                       <h4 className="text-17 fw-500 mb-20">About Courses</h4>
 
                       <ul className="mega__list">
@@ -155,10 +155,10 @@ export default function Menu({ allClasses, headerPosition }) {
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    </div> */}
                     
 
-                    <div className="col">
+                    <div className="">
                       <h4 className="text-17 fw-500 mb-20">Popular Courses</h4>
 
                       <ul className="mega__list">
@@ -205,11 +205,11 @@ export default function Menu({ allClasses, headerPosition }) {
                   </div>
 
                 
-                </div>
+                {/* </div> */}
               </div>
             </li>
 
-            <li className="menu-item-has-children">
+            {/* <li className="menu-item-has-children">
               <Link
                 data-barba
                 href="#"
@@ -237,9 +237,9 @@ export default function Menu({ allClasses, headerPosition }) {
                   </li>
                 ))}
               </ul>
-            </li>
+            </li> */}
 
-            <li className="menu-item-has-children">
+            {/* <li className="menu-item-has-children">
               <Link
                 data-barba
                 href="#"
@@ -267,11 +267,11 @@ export default function Menu({ allClasses, headerPosition }) {
                   </li>
                 ))}
               </ul>
-            </li>
+            </li> */}
 
             <li className="menu-item-has-children">
                   <Link
-                    href="/about-1"
+                    href="/about"
                     className={
                       submenu == "About Us" ? "activeMenu" : "inActiveMenu"
                     }
@@ -280,8 +280,8 @@ export default function Menu({ allClasses, headerPosition }) {
                   </Link>
                 </li>
             <li>
-              <Link data-barba href="/contact-1"  className={
-                pathname == "/contact-1" ? "activeMenu" : "inActiveMenuTwo"
+              <Link data-barba href="/contact"  className={
+                pathname == "/contact" ? "activeMenu" : "inActiveMenuTwo"
               }>
                 Contact
               </Link>

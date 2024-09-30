@@ -209,7 +209,7 @@ export default function CoursesEight() {
         <div className="row justify-center pt-60 lg:pt-40">
           <div className="col-auto">
             <Link
-              href="/courses-list-5"
+              href="/courses"
               className="button -md -outline-light-5 text-dark-1"
             >
               View All Courses

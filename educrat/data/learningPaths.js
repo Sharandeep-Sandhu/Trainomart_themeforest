@@ -28,28 +28,28 @@ export const learningPath = [
 export const learningPathTwo = [
   {
     id: 1,
-    icon: "/assets/img/home-4/learning/1.svg",
+    icon: "/assets/img/Home/learning/1.svg",
     title: "Learn with Experts",
     text: "Grursus mal suada faci lisis that ipsum ameti consecte.",
     bgColor: "bg-green-3",
   },
   {
     id: 2,
-    icon: "/assets/img/home-4/learning/2.svg",
+    icon: "/assets/img/Home/learning/2.svg",
     title: "Learn Anything",
     text: "Grursus mal suada faci lisis that ipsum ameti consecte.",
     bgColor: "bg-yellow-2",
   },
   {
     id: 3,
-    icon: "/assets/img/home-4/learning/3.svg",
+    icon: "/assets/img/Home/learning/3.svg",
     title: "Flexible Learning",
     text: "Grursus mal suada faci lisis that ipsum ameti consecte.",
     bgColor: "bg-blue-2",
   },
   {
     id: 4,
-    icon: "/assets/img/home-4/learning/4.svg",
+    icon: "/assets/img/Home/learning/4.svg",
     title: "Industrial Standart",
     text: "Grursus mal suada faci lisis that ipsum ameti consecte.",
     bgColor: "bg-orange-3",

@@ -12,7 +12,7 @@ export default function InstractorFour() {
               width={690}
               height={760}
               className="w-1/1"
-              src="/assets/img/home-4/dreamJob/2.png"
+              src="/assets/img/Home/dreamJob/2.png"
               alt="image"
             />
           </div>

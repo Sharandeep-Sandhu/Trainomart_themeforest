@@ -51,7 +51,7 @@ export default function CategoriesTwo() {
           <div className="col-lg-3 col-md-6">
             <div className="row y-gap-30">
               <div className="col-12">
-                <Link href={`/courses-list-5`} className="categoryCard -type-1">
+                <Link href={`/courses`} className="categoryCard -type-1">
                   <div className="categoryCard__image">
                     <div
                       className="bg-image ratio ratio-30:35 js-lazy"

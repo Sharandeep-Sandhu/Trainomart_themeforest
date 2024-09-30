@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'traino',
     'rest_framework',
     'corsheaders',
     'django.contrib.admin',
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'traino.apps.TrainoConfig',
+    # 'traino.apps.TrainoConfig',
 ]
 
 MIDDLEWARE = [

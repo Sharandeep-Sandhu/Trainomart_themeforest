@@ -8,12 +8,12 @@ class Course(models.Model):
     description = models.TextField()
     course_content = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    duration = models.DurationField()
+    duration = models.DurationField(help_text="Enter the duration of the course (in HH:MM:SS format).")
     language = models.CharField(max_length=100)
-    # certificate = models.BooleanField(default=False) 
-    skill_level = models.CharField(max_length=50)
+    skill_level = models.CharField(max_length=50, choices=[('beginner', 'Beginner'), ('intermediate', 'Intermediate'), ('advanced', 'Advanced')])
     last_updated = models.DateTimeField(auto_now=True)  # Automatically set to now every time the object is saved
-
+    is_featured = models.BooleanField(default=False)
+    
     def __str__(self):
         return self.course_name
 

@@ -98,7 +98,7 @@ export default function HeroFour() {
                   <Image
                     width={800}
                     height={800}
-                    src="/assets/img/home-4/masthead/shape.svg"
+                    src="/assets/img/Home/masthead/shape.svg"
                     alt="image"
                   />
                 </div>
@@ -107,7 +107,7 @@ export default function HeroFour() {
                   height={656}
                   data-move="20"
                   className="js-mouse-move"
-                  src="/assets/img/home-4/masthead/1.png"
+                  src="/assets/img/Home/masthead/1.png"
                   alt="image"
                 />
               </div>
