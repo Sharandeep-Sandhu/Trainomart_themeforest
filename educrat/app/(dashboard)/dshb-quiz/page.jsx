@@ -8,7 +8,7 @@ import Sidebar from '@/components/dashboard/Sidebar'
 import HeaderDashboard from '@/components/layout/headers/HeaderDashboard'
 import React from 'react'
 export const metadata = {
-  title: 'Dashboard-quiz || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Dashboard-quiz',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

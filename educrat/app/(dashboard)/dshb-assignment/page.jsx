@@ -17,7 +17,7 @@ import HeaderDashboard from '@/components/layout/headers/HeaderDashboard'
 import React from 'react'
 
 export const metadata = {
-  title: 'Dashboard-assignment || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Dashboard-assignment',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

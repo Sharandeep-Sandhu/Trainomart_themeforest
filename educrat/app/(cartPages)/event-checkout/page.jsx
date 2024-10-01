@@ -18,7 +18,7 @@ import Header from '@/components/layout/headers/Header'
 import React from 'react'
 import EventCheckOut from '@/components/cartsAndCheckout/EventCheckout'
 export const metadata = {
-  title: 'Event-checkout || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Event-checkout',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

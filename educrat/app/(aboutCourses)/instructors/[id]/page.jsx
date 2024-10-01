@@ -9,7 +9,7 @@ import Header from '@/components/layout/headers/Header'
 import React from 'react'
 
 export const metadata = {
-  title: 'Instractors-single || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Instractors-single',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

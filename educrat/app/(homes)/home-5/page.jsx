@@ -22,7 +22,7 @@ import FooterFive from '@/components/layout/footers/FooterFive'
 import Preloader from '@/components/common/Preloader'
 
 export const metadata = {
-  title: 'Home-5 || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Home-5',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

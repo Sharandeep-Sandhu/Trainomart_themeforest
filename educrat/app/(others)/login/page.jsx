@@ -18,7 +18,7 @@ import LoginForm from '@/components/others/LoginForm'
 import Terms from '@/components/terms/Terms'
 import React from 'react'
 export const metadata = {
-  title: 'Login || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Login',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

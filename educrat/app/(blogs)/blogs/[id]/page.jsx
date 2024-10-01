@@ -21,7 +21,7 @@ import Preloader from '@/components/common/Preloader'
 import FooterFour from '@/components/layout/footers/FooterFour'
 
 export const metadata = {
-  title: 'Blog-details || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Blog-details',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

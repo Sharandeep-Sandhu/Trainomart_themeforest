@@ -10,7 +10,7 @@ import HeaderFour from '@/components/layout/headers/HeaderFour'
 import ShopOrder from '@/components/shop/ShopOrder'
 import React from 'react'
 export const metadata = {
-  title: 'Shop-order || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Shop-order',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

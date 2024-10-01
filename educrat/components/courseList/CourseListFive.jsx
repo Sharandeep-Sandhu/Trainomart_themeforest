@@ -17,125 +17,124 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function CourseListFive() {
+  const [courses, setCourses] = useState([]); // State to store fetched courses
   const [filterOpen, setFilterOpen] = useState(false);
   const [filterCategories, setFilterCategories] = useState([]);
   const [filterRatingRange, setFilterRatingRange] = useState([]);
-  const [filterInstractors, setFilterInstractors] = useState([]);
+  const [filterInstructors, setFilterInstructors] = useState([]);
   const [filterPrice, setFilterPrice] = useState("All");
   const [filterLevels, setFilterLevels] = useState([]);
-  const [filterlanguange, setFilterlanguange] = useState([]);
+  const [filterLanguage, setFilterLanguage] = useState([]);
   const [filterDuration, setFilterDuration] = useState([]);
-
   const [currentSortingOption, setCurrentSortingOption] = useState("Default");
-
   const [filteredData, setFilteredData] = useState([]);
-
   const [sortedFilteredData, setSortedFilteredData] = useState([]);
-
   const [pageNumber, setPageNumber] = useState(1);
 
+  // Fetch courses from the API when the component mounts
   useEffect(() => {
-    const refItems = coursesData.filter((elm) => {
-      if (filterPrice == "All") {
-        return true;
-      } else if (filterPrice == "Free") {
-        return !elm.paid;
-      } else if (filterPrice == "Paid") {
-        return elm.paid;
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/courses/");
+        const data = await response.json();
+        setCourses(data); // Store fetched courses in state
+      } catch (error) {
+        console.error("Error fetching courses:", error);
       }
+    };
+    fetchCourses();
+  }, []);
+
+  // Filtering logic
+  useEffect(() => {
+    const filteredCourses = courses.filter((elm) => {
+      const price = parseFloat(elm.price) || 0;
+  
+      // Price Filter
+      if (filterPrice === "Free" && price !== 0) return false;
+      if (filterPrice === "Paid" && price === 0) return false;
+  
+      // Instructors Filter
+      if (
+        filterInstructors.length > 0 &&
+        !filterInstructors.includes(elm.authorName)
+      )
+        return false;
+  
+      // Categories Filter
+      if (
+        filterCategories.length > 0 &&
+        !filterCategories.includes(elm.category)
+      )
+        return false;
+  
+      // Levels Filter
+      if (filterLevels.length > 0 && !filterLevels.includes(elm.level))
+        return false;
+  
+      // Language Filter
+      if (
+        filterLanguage.length > 0 &&
+        !filterLanguage.includes(elm.language)
+      )
+        return false;
+  
+      // Rating Range Filter
+      if (
+        filterRatingRange.length > 0 &&
+        (elm.rating < filterRatingRange[0] ||
+          elm.rating > filterRatingRange[1])
+      )
+        return false;
+  
+      // Duration Filter
+      if (
+        filterDuration.length > 0 &&
+        (elm.duration < filterDuration[0] || elm.duration > filterDuration[1])
+      )
+        return false;
+  
+      return true;
     });
-
-    let filteredArrays = [];
-
-    if (filterInstractors.length > 0) {
-      const filtered = refItems.filter((elm) =>
-        filterInstractors.includes(elm.authorName),
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-    if (filterCategories.length > 0) {
-      const filtered = refItems.filter((elm) =>
-        filterCategories.includes(elm.category),
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-    if (filterLevels.length > 0) {
-      const filtered = refItems.filter((elm) =>
-        filterLevels.includes(elm.level),
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-    if (filterlanguange.length > 0) {
-      const filtered = refItems.filter((elm) =>
-        filterlanguange.includes(elm.languange),
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-    if (filterRatingRange.length > 0) {
-      const filtered = refItems.filter(
-        (elm) =>
-          elm.rating >= filterRatingRange[0] &&
-          elm.rating <= filterRatingRange[1],
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-    if (filterDuration.length > 0) {
-      const filtered = refItems.filter(
-        (elm) =>
-          elm.duration >= filterDuration[0] &&
-          elm.duration <= filterDuration[1],
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-
-    const commonItems = refItems.filter((item) =>
-      filteredArrays.every((array) => array.includes(item)),
-    );
-    setFilteredData(commonItems);
+  
+    setFilteredData(filteredCourses);
     setPageNumber(1);
   }, [
+    courses,
     filterCategories,
     filterRatingRange,
-    filterInstractors,
+    filterInstructors,
     filterPrice,
     filterLevels,
-    filterlanguange,
+    filterLanguage,
     filterDuration,
   ]);
+  
 
-  useEffect(() => {
-    if (currentSortingOption == "Default") {
-      setSortedFilteredData(filteredData);
-    } else if (currentSortingOption == "Rating (asc)") {
-      setSortedFilteredData(
-        [...filteredData].sort((a, b) => a.rating - b.rating),
-      );
-    } else if (currentSortingOption == "Rating (dsc)") {
-      setSortedFilteredData(
-        [...filteredData].sort((a, b) => b.rating - a.rating),
-      );
-    } else if (currentSortingOption == "Price (asc)") {
-      setSortedFilteredData(
-        [...filteredData].sort((a, b) => a.discountedPrice - b.discountedPrice),
-      );
-    } else if (currentSortingOption == "Price (dsc)") {
-      setSortedFilteredData(
-        [...filteredData].sort((a, b) => b.discountedPrice - a.discountedPrice),
-      );
-    } else if (currentSortingOption == "Duration (asc)") {
-      setSortedFilteredData(
-        [...filteredData].sort((a, b) => a.duration - b.duration),
-      );
-    } else if (currentSortingOption == "Duration (dsc)") {
-      setSortedFilteredData(
-        [...filteredData].sort((a, b) => b.duration - a.duration),
-      );
-    }
-  }, [currentSortingOption, filteredData]);
+  // Sorting logic
+useEffect(() => {
+  if (!filteredData || filteredData.length === 0) return;
+
+  if (currentSortingOption === "Default") {
+    setSortedFilteredData(filteredData);
+  } else if (currentSortingOption === "Rating (asc)") {
+    setSortedFilteredData([...filteredData].sort((a, b) => (a.rating || 0) - (b.rating || 0)));
+  } else if (currentSortingOption === "Rating (dsc)") {
+    setSortedFilteredData([...filteredData].sort((a, b) => (b.rating || 0) - (a.rating || 0)));
+  } else if (currentSortingOption === "Price (asc)") {
+    setSortedFilteredData([...filteredData].sort((a, b) => parseFloat(a.discountedPrice || 0) - parseFloat(b.discountedPrice || 0)));
+  } else if (currentSortingOption === "Price (dsc)") {
+    setSortedFilteredData([...filteredData].sort((a, b) => parseFloat(b.discountedPrice || 0) - parseFloat(a.discountedPrice || 0)));
+  } else if (currentSortingOption === "Duration (asc)") {
+    setSortedFilteredData([...filteredData].sort((a, b) => (a.duration || 0) - (b.duration || 0)));
+  } else if (currentSortingOption === "Duration (dsc)") {
+    setSortedFilteredData([...filteredData].sort((a, b) => (b.duration || 0) - (a.duration || 0)));
+  }
+}, [currentSortingOption, filteredData]);
 
   const handleFilterCategories = (item) => {
     if (filterCategories.includes(item)) {
-      const filtered = filterCategories.filter((elm) => elm != item);
+      const filtered = filterCategories.filter((elm) => elm !== item);
       setFilterCategories([...filtered]);
     } else {
       setFilterCategories((pre) => [...pre, item]);
@@ -144,12 +143,12 @@ export default function CourseListFive() {
   const handleFilterRatingRange = (item) => {
     setFilterRatingRange(item);
   };
-  const handleFilterInstractors = (item) => {
-    if (filterInstractors.includes(item)) {
-      const filtered = filterInstractors.filter((elm) => elm != item);
-      setFilterInstractors([...filtered]);
+  const handleFilterInstructors = (item) => {
+    if (filterInstructors.includes(item)) {
+      const filtered = filterInstructors.filter((elm) => elm !== item);
+      setFilterInstructors([...filtered]);
     } else {
-      setFilterInstractors((pre) => [...pre, item]);
+      setFilterInstructors((pre) => [...pre, item]);
     }
   };
   const handleFilterPrice = (item) => {
@@ -157,23 +156,24 @@ export default function CourseListFive() {
   };
   const handleFilterLevels = (item) => {
     if (filterLevels.includes(item)) {
-      const filtered = filterLevels.filter((elm) => elm != item);
+      const filtered = filterLevels.filter((elm) => elm !== item);
       setFilterLevels([...filtered]);
     } else {
       setFilterLevels((pre) => [...pre, item]);
     }
   };
-  const handleFilterlanguange = (item) => {
-    if (filterlanguange.includes(item)) {
-      const filtered = filterlanguange.filter((elm) => elm != item);
-      setFilterlanguange([...filtered]);
+  const handleFilterLanguage = (item) => {
+    if (filterLanguage.includes(item)) {
+      const filtered = filterLanguage.filter((elm) => elm !== item);
+      setFilterLanguage([...filtered]);
     } else {
-      setFilterlanguange((pre) => [...pre, item]);
+      setFilterLanguage((pre) => [...pre, item]);
     }
   };
   const handleFilterDuration = (item) => {
     setFilterDuration(item);
   };
+
   return (
     <>
       <section className="page-header -type-1">
@@ -226,7 +226,7 @@ export default function CourseListFive() {
                           className="dropdown js-dropdown js-category-active"
                         >
                           <div
-                            className="dropdown__button d-flex items-center text-14 rounded-8 px-20 py-10 text-14 lh-12"
+                            className="dropdown__button d-flex items-center text-14 rounded-8 px-20 py-10"
                             onClick={() => {
                               document
                                 .getElementById("dd51button")
@@ -253,9 +253,7 @@ export default function CourseListFive() {
                                 <div
                                   key={i}
                                   onClick={() => {
-                                    setCurrentSortingOption((pre) =>
-                                      pre == elm ? "Default" : elm,
-                                    );
+                                    setCurrentSortingOption(elm);
                                     document
                                       .getElementById("dd51button")
                                       .classList.toggle("-is-dd-active");
@@ -266,7 +264,7 @@ export default function CourseListFive() {
                                 >
                                   <span
                                     className={`d-block js-dropdown-link cursor ${
-                                      currentSortingOption == elm
+                                      currentSortingOption === elm
                                         ? "activeMenu"
                                         : ""
                                     } `}
@@ -302,18 +300,20 @@ export default function CourseListFive() {
               >
                 <div className="sidebar -courses px-30 py-30 rounded-8 bg-light-3 mb-50">
                   <div className="row x-gap-60 y-gap-40">
+                    {/* Category Filter */}
                     <div className="col-xl-3 col-lg-4 col-sm-6">
                       <div className="sidebar__item">
                         <h5 className="sidebar__title">Category</h5>
                         <div className="sidebar-checkbox">
                           <div
-                            className="sidebar-checkbox__item"
+                            className="sidebar-checkbox__item cursor"
                             onClick={() => setFilterCategories([])}
                           >
                             <div className="form-checkbox">
                               <input
                                 type="checkbox"
-                                checked={filterCategories.length ? false : true}
+                                checked={filterCategories.length === 0}
+                                readOnly
                               />
                               <div className="form-checkbox__mark">
                                 <div className="form-checkbox__icon icon-check"></div>
@@ -332,11 +332,8 @@ export default function CourseListFive() {
                               <div className="form-checkbox">
                                 <input
                                   type="checkbox"
-                                  checked={
-                                    filterCategories.includes(item.title)
-                                      ? true
-                                      : false
-                                  }
+                                  checked={filterCategories.includes(item.title)}
+                                  readOnly
                                 />
                                 <div className="form-checkbox__mark">
                                   <div className="form-checkbox__icon icon-check"></div>
@@ -349,8 +346,8 @@ export default function CourseListFive() {
                               <div className="sidebar-checkbox__count">
                                 (
                                 {
-                                  coursesData.filter(
-                                    (itm) => itm.category == item.title,
+                                  courses.filter(
+                                    (itm) => itm.category === item.title
                                   ).length
                                 }
                                 )
@@ -369,23 +366,21 @@ export default function CourseListFive() {
                       </div>
                     </div>
 
+                    {/* Ratings Filter */}
                     <div className="col-xl-3 col-lg-4 col-sm-6">
                       <div className="sidebar__item">
                         <h5 className="sidebar__title">Ratings</h5>
                         <div className="sidebar-checkbox">
                           <div
-                            className="sidebar-checkbox__item"
+                            className="sidebar-checkbox__item cursor"
                             onClick={() => setFilterRatingRange([])}
                           >
                             <div className="form-radio mr-10">
                               <div className="radio">
                                 <input
                                   type="radio"
-                                  checked={
-                                    filterRatingRange.length < 1
-                                      ? "checked"
-                                      : ""
-                                  }
+                                  checked={filterRatingRange.length === 0}
+                                  readOnly
                                 />
                                 <div className="radio__mark">
                                   <div className="radio__icon"></div>
@@ -393,7 +388,6 @@ export default function CourseListFive() {
                               </div>
                             </div>
                             <div className="sidebar-checkbox__title d-flex items-center">
-                              <div className="d-flex x-gap-5 pr-10"></div>
                               All
                             </div>
                             <div className="sidebar-checkbox__count"></div>
@@ -411,11 +405,11 @@ export default function CourseListFive() {
                                   <input
                                     type="radio"
                                     checked={
-                                      filterRatingRange.join(" ").trim() ==
-                                      item.range.join(" ").trim()
-                                        ? "checked"
-                                        : ""
+                                      filterRatingRange.length > 0 &&
+                                      filterRatingRange.toString() ===
+                                        item.range.toString()
                                     }
+                                    readOnly
                                   />
                                   <div className="radio__mark">
                                     <div className="radio__icon"></div>
@@ -424,17 +418,20 @@ export default function CourseListFive() {
                               </div>
                               <div className="sidebar-checkbox__title d-flex items-center">
                                 <div className="d-flex x-gap-5 pr-10">
-                                  <Star star={item.star} textSize={"text-11"} />
+                                  <Star
+                                    star={item.star}
+                                    textSize={"text-11"}
+                                  />
                                 </div>
                                 {item.text}
                               </div>
                               <div className="sidebar-checkbox__count">
                                 (
                                 {
-                                  coursesData.filter(
+                                  courses.filter(
                                     (itm) =>
                                       itm.rating >= item.range[0] &&
-                                      itm.rating <= item.range[1],
+                                      itm.rating <= item.range[1]
                                   ).length
                                 }
                                 )
@@ -445,20 +442,20 @@ export default function CourseListFive() {
                       </div>
                     </div>
 
+                    {/* Instructors Filter */}
                     <div className="col-xl-3 col-lg-4 col-sm-6">
                       <div className="sidebar__item">
                         <h5 className="sidebar__title">Instructors</h5>
                         <div className="sidebar-checkbox">
                           <div
-                            className="sidebar-checkbox__item"
-                            onClick={() => setFilterInstractors([])}
+                            className="sidebar-checkbox__item cursor"
+                            onClick={() => setFilterInstructors([])}
                           >
                             <div className="form-checkbox">
                               <input
                                 type="checkbox"
-                                checked={
-                                  filterInstractors.length ? false : true
-                                }
+                                checked={filterInstructors.length === 0}
+                                readOnly
                               />
                               <div className="form-checkbox__mark">
                                 <div className="form-checkbox__icon icon-check"></div>
@@ -473,17 +470,14 @@ export default function CourseListFive() {
                               className="sidebar-checkbox__item cursor"
                               key={index}
                               onClick={() =>
-                                handleFilterInstractors(item.title)
+                                handleFilterInstructors(item.title)
                               }
                             >
                               <div className="form-checkbox">
                                 <input
                                   type="checkbox"
-                                  checked={
-                                    filterInstractors.includes(item.title)
-                                      ? true
-                                      : false
-                                  }
+                                  checked={filterInstructors.includes(item.title)}
+                                  readOnly
                                 />
                                 <div className="form-checkbox__mark">
                                   <div className="form-checkbox__icon icon-check"></div>
@@ -496,8 +490,8 @@ export default function CourseListFive() {
                               <div className="sidebar-checkbox__count">
                                 (
                                 {
-                                  coursesData.filter(
-                                    (itm) => itm.authorName == item.title,
+                                  courses.filter(
+                                    (itm) => itm.authorName === item.title
                                   ).length
                                 }
                                 )
@@ -516,6 +510,7 @@ export default function CourseListFive() {
                       </div>
                     </div>
 
+                    {/* Price Filter */}
                     <div className="col-xl-3 col-lg-4 col-sm-6">
                       <div className="sidebar__item">
                         <h5 className="sidebar__title">Price</h5>
@@ -530,9 +525,8 @@ export default function CourseListFive() {
                                 <div className="radio">
                                   <input
                                     type="radio"
-                                    checked={
-                                      filterPrice == item.title ? "checked" : ""
-                                    }
+                                    checked={filterPrice === item.title}
+                                    readOnly
                                   />
                                   <div className="radio__mark">
                                     <div className="radio__icon"></div>
@@ -545,11 +539,11 @@ export default function CourseListFive() {
                               </div>
                               <div className="sidebar-checkbox__count">
                                 (
-                                {item.title == "Free" &&
-                                  coursesData.filter((itm) => !itm.paid).length}
-                                {item.title == "Paid" &&
-                                  coursesData.filter((itm) => itm.paid).length}
-                                {item.title == "All" && coursesData.length})
+                                {item.title === "Free" &&
+                                  courses.filter((itm) => !itm.paid).length}
+                                {item.title === "Paid" &&
+                                  courses.filter((itm) => itm.paid).length}
+                                {item.title === "All" && courses.length})
                               </div>
                             </div>
                           ))}
@@ -557,6 +551,7 @@ export default function CourseListFive() {
                       </div>
                     </div>
 
+                    {/* Level Filter */}
                     <div className="col-xl-3 col-lg-4 col-sm-6">
                       <div className="sidebar__item">
                         <h5 className="sidebar__title">Level</h5>
@@ -568,7 +563,8 @@ export default function CourseListFive() {
                             <div className="form-checkbox">
                               <input
                                 type="checkbox"
-                                checked={filterLevels.length < 1 ? true : false}
+                                checked={filterLevels.length === 0}
+                                readOnly
                               />
                               <div className="form-checkbox__mark">
                                 <div className="form-checkbox__icon icon-check"></div>
@@ -587,11 +583,8 @@ export default function CourseListFive() {
                               <div className="form-checkbox">
                                 <input
                                   type="checkbox"
-                                  checked={
-                                    filterLevels.includes(item.title)
-                                      ? true
-                                      : false
-                                  }
+                                  checked={filterLevels.includes(item.title)}
+                                  readOnly
                                 />
                                 <div className="form-checkbox__mark">
                                   <div className="form-checkbox__icon icon-check"></div>
@@ -604,8 +597,8 @@ export default function CourseListFive() {
                               <div className="sidebar-checkbox__count">
                                 (
                                 {
-                                  coursesData.filter(
-                                    (itm) => itm.level == item.title,
+                                  courses.filter(
+                                    (itm) => itm.level === item.title
                                   ).length
                                 }
                                 )
@@ -616,18 +609,20 @@ export default function CourseListFive() {
                       </div>
                     </div>
 
+                    {/* Language Filter */}
                     <div className="col-xl-3 col-lg-4 col-sm-6">
                       <div className="sidebar__item">
-                        <h5 className="sidebar__title">Languange</h5>
+                        <h5 className="sidebar__title">Language</h5>
                         <div className="sidebar-checkbox">
                           <div
-                            className="sidebar-checkbox__item"
-                            onClick={() => setFilterlanguange([])}
+                            className="sidebar-checkbox__item cursor"
+                            onClick={() => setFilterLanguage([])}
                           >
                             <div className="form-checkbox">
                               <input
                                 type="checkbox"
-                                checked={filterlanguange.length ? false : true}
+                                checked={filterLanguage.length === 0}
+                                readOnly
                               />
                               <div className="form-checkbox__mark">
                                 <div className="form-checkbox__icon icon-check"></div>
@@ -641,16 +636,13 @@ export default function CourseListFive() {
                             <div
                               className="sidebar-checkbox__item cursor"
                               key={index}
-                              onClick={() => handleFilterlanguange(item.title)}
+                              onClick={() => handleFilterLanguage(item.title)}
                             >
                               <div className="form-checkbox">
                                 <input
                                   type="checkbox"
-                                  checked={
-                                    filterlanguange.includes(item.title)
-                                      ? true
-                                      : false
-                                  }
+                                  checked={filterLanguage.includes(item.title)}
+                                  readOnly
                                 />
                                 <div className="form-checkbox__mark">
                                   <div className="form-checkbox__icon icon-check"></div>
@@ -663,8 +655,8 @@ export default function CourseListFive() {
                               <div className="sidebar-checkbox__count">
                                 (
                                 {
-                                  coursesData.filter(
-                                    (itm) => itm.languange == item.title,
+                                  courses.filter(
+                                    (itm) => itm.language === item.title
                                   ).length
                                 }
                                 )
@@ -683,6 +675,7 @@ export default function CourseListFive() {
                       </div>
                     </div>
 
+                    {/* Duration Filter */}
                     <div className="col-xl-3 col-lg-4 col-sm-6">
                       <div className="sidebar__item">
                         <h5 className="sidebar__title">Duration</h5>
@@ -694,7 +687,8 @@ export default function CourseListFive() {
                             <div className="form-checkbox">
                               <input
                                 type="checkbox"
-                                checked={filterDuration.length ? false : true}
+                                checked={filterDuration.length === 0}
+                                readOnly
                               />
                               <div className="form-checkbox__mark">
                                 <div className="form-checkbox__icon icon-check"></div>
@@ -713,11 +707,10 @@ export default function CourseListFive() {
                                 <input
                                   type="checkbox"
                                   checked={
-                                    filterDuration.toString() ==
+                                    filterDuration.toString() ===
                                     item.range.toString()
-                                      ? true
-                                      : false
                                   }
+                                  readOnly
                                 />
                                 <div className="form-checkbox__mark">
                                   <div className="form-checkbox__icon icon-check"></div>
@@ -729,10 +722,10 @@ export default function CourseListFive() {
                               <div className="sidebar-checkbox__count">
                                 (
                                 {
-                                  coursesData.filter(
+                                  courses.filter(
                                     (itm) =>
                                       itm.duration >= item.range[0] &&
-                                      itm.duration <= item.range[1],
+                                      itm.duration <= item.range[1]
                                   ).length
                                 }
                                 )
@@ -748,6 +741,7 @@ export default function CourseListFive() {
             </div>
           </div>
 
+          {/* Courses Listing */}
           <div className="row y-gap-30">
             {sortedFilteredData
               .slice((pageNumber - 1) * 12, pageNumber * 12)
@@ -760,8 +754,8 @@ export default function CourseListFive() {
                           width={510}
                           height={360}
                           className="w-1/1"
-                          src={elm.imageSrc}
-                          alt="image"
+                          src={elm.course_image}
+                          alt={elm.course_name}
                         />
                         <div className="coursesCard__image_overlay rounded-top-8"></div>
                       </div>
@@ -802,11 +796,8 @@ export default function CourseListFive() {
                       </div>
 
                       <div className="text-17 lh-15 fw-500 text-dark-1 mt-10">
-                        <Link
-                          className="linkCustom"
-                          href={`/courses/${elm.id}`}
-                        >
-                          {elm.title}{" "}
+                        <Link className="linkCustom" href={`/courses/${elm.id}`}>
+                          {elm.course_name}
                         </Link>
                       </div>
 
@@ -817,7 +808,7 @@ export default function CourseListFive() {
                               width={16}
                               height={17}
                               src="/assets/img/coursesCards/icons/1.svg"
-                              alt="icon"
+                              alt="Lessons Icon"
                             />
                           </div>
                           <div className="text-14 lh-1">
@@ -831,12 +822,15 @@ export default function CourseListFive() {
                               width={16}
                               height={17}
                               src="/assets/img/coursesCards/icons/2.svg"
-                              alt="icon"
+                              alt="Duration Icon"
                             />
                           </div>
-                          <div className="text-14 lh-1">{`${Math.floor(
-                            elm.duration / 60,
-                          )}h ${Math.floor(elm.duration % 60)}m`}</div>
+                          <div className="text-14 lh-1">
+                            {/* {`${Math.floor(
+                            elm.duration / 60
+                          )}h ${Math.floor(elm.duration % 60)}m`} */}
+                          {elm.duration}
+                          </div>
                         </div>
 
                         <div className="d-flex items-center">
@@ -845,36 +839,39 @@ export default function CourseListFive() {
                               width={16}
                               height={17}
                               src="/assets/img/coursesCards/icons/3.svg"
-                              alt="icon"
+                              alt="Level Icon"
                             />
                           </div>
-                          <div className="text-14 lh-1">{elm.level}</div>
+                          <div className="text-14 lh-1">{elm.skill_level}</div>
                         </div>
                       </div>
 
                       <div className="coursesCard-footer">
                         <div className="coursesCard-footer__author">
-                          <Image
+                          {/* <Image
                             width={30}
                             height={30}
                             src={elm.authorImageSrc}
-                            alt="image"
-                          />
-                          <div>{elm.authorName}</div>
+                            alt={elm.authorName}
+                          /> */}
+                          {/* <div className="">{elm.price}</div> */}
                         </div>
 
                         <div className="coursesCard-footer__price">
-                          {elm.paid ? (
+                          {/* {elm.paid ? (
                             <>
-                              <div>${elm.originalPrice}</div>
-                              <div>${elm.discountedPrice}</div>
+                              <div>${elm.price}</div>
+                              <div>${elm.price}</div>
                             </>
                           ) : (
                             <>
                               <div></div>
                               <div>Free</div>
                             </>
-                          )}
+                          )} */}
+                          <div className="">{elm.price}</div>
+                          <div className="">{elm.price}</div>
+
                         </div>
                       </div>
                     </div>
@@ -883,6 +880,7 @@ export default function CourseListFive() {
               ))}
           </div>
 
+          {/* Pagination */}
           <div className="row justify-center pt-90 lg:pt-50">
             <div className="col-auto">
               <PaginationTwo

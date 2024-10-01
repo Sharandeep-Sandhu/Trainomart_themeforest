@@ -11,7 +11,7 @@ import Header from '@/components/layout/headers/Header'
 import Terms from '@/components/terms/Terms'
 import React from 'react'
 export const metadata = {
-  title: 'Terms || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Terms',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

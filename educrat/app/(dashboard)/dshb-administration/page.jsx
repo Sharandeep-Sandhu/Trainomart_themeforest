@@ -17,7 +17,7 @@ import React from 'react'
 import Preloader from '@/components/common/Preloader'
 
 export const metadata = {
-  title: 'Dashboard-administration || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Dashboard-administration',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

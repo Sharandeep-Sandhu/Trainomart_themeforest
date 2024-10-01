@@ -19,7 +19,7 @@ import LearningPathSix from '@/components/common/LearningPathSix'
 import Preloader from '@/components/common/Preloader'
 
 export const metadata = {
-  title: 'About-2 || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'About-2',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   

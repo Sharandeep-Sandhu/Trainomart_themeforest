@@ -9,7 +9,7 @@ import Survey from '@/components/dashboard/Survey'
 import HeaderDashboard from '@/components/layout/headers/HeaderDashboard'
 import React from 'react'
 export const metadata = {
-  title: 'Dashboard-survey || Educrat - Professional LMS Online Education Course NextJS Template',
+  title: 'Dashboard-survey',
   description:
     'Elevate your e-learning content with Educrat, the most impressive LMS template for online courses, education and LMS platforms.',
   
