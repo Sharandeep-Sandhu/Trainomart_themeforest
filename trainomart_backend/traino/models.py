@@ -10,6 +10,7 @@ class Course(models.Model):
     learnList = models.TextField()
     Lessons = models.TextField()
     category = models.TextField()
+    Requirements = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     duration = models.DurationField(help_text="Enter the duration of the course (in HH:MM:SS format).")
     language = models.CharField(max_length=100)

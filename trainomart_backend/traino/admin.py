@@ -6,7 +6,7 @@ class CourseAdmin(admin.ModelAdmin):
     list_filter = ('is_featured', 'language', 'skill_level')
     search_fields = ('course_name', 'description')
     ordering = ('last_updated',)
-    fields = ('course_name', 'course_image', 'description', 'course_content', 'learnList', 'Lessons', 'category', 'price', 'duration', 'language', 'skill_level', 'is_featured')
+    fields = ('course_name', 'course_image', 'description', 'course_content', 'learnList', 'Lessons', 'Requirements', 'category', 'price', 'duration', 'language', 'skill_level', 'is_featured')
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('blog_title', 'blog_image')

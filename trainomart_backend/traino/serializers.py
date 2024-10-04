@@ -4,7 +4,7 @@ from .models import Course, Blog, Leads, Students, ContactMessage
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ['id', 'course_name', 'course_image', 'course_content', 'description', 'learnList', 'Lessons', 'category', 'duration', 'language', 'skill_level', 'price', 'last_updated', 'is_featured']
+        fields = ['id', 'course_name', 'course_image', 'course_content', 'description', 'learnList', 'Lessons', 'Requirements', 'category', 'duration', 'language', 'skill_level', 'price', 'last_updated', 'is_featured']
 
 
 class BlogSerializer(serializers.ModelSerializer):
