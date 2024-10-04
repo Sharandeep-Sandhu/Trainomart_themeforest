@@ -8,13 +8,49 @@ import dynamic from "next/dynamic";
 const MapComponent = dynamic(() => import("./Map"), {
   ssr: false,
 });
+
 export default function ContactOne() {
   const [showMap, setShowMap] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
   useEffect(() => {
     setShowMap(true);
   }, []);
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Perform validation if needed
+
+    // Send data to the backend
+    const response = await fetch('http://localhost:8000/api/contact/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      // Handle success (e.g., show a success message)
+      console.log("Message sent successfully");
+      setFormData({ name: "", email: "", message: "" }); // Reset form
+    } else {
+      // Handle error (e.g., show an error message)
+      console.error("Failed to send message");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -37,13 +73,7 @@ export default function ContactOne() {
                     </div>
                     <div className="ml-20">
                       {elm.address
-                        ? `${elm.address
-                            .split(" ")
-                            .slice(0, 4)
-                            .join(" ")} \n ${elm.address
-                            .split(" ")
-                            .slice(4, -1)
-                            .join(" ")}`
+                        ? `${elm.address.split(" ").slice(0, 4).join(" ")} \n ${elm.address.split(" ").slice(4).join(" ")}`
                         : elm.email || elm.phoneNumber}
                     </div>
                   </div>
@@ -70,8 +100,10 @@ export default function ContactOne() {
                   <input
                     required
                     type="text"
-                    name="title"
+                    name="name"
                     placeholder="Name..."
+                    value={formData.name}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="col-md-6">
@@ -80,9 +112,11 @@ export default function ContactOne() {
                   </label>
                   <input
                     required
-                    type="text"
-                    name="title"
+                    type="email"
+                    name="email"
                     placeholder="Email..."
+                    value={formData.email}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="col-12">
@@ -91,9 +125,11 @@ export default function ContactOne() {
                   </label>
                   <textarea
                     required
-                    name="comment"
+                    name="message"
                     placeholder="Message"
                     rows="8"
+                    value={formData.message}
+                    onChange={handleChange}
                   ></textarea>
                 </div>
                 <div className="col-12">

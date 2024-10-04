@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Blog, Leads, Students
+from .models import Course, Blog, Leads, Students, ContactMessage
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('course_name', 'price', 'duration', 'is_featured', 'last_updated')
@@ -25,6 +25,15 @@ class LeadsAdmin(admin.ModelAdmin):
     search_fields = ('name', 'email')
     ordering = ('name',)
     fields = ('name', 'phone_number', 'email', 'payment_status')
+
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'created_at')  # Fields to display in the list view
+    search_fields = ('name', 'email')  # Fields to enable searching
+    list_filter = ('created_at',)  # Enable filtering by created date
+    ordering = ('-created_at',)  # Order by created date descending
+    
 
 # Register the models with their corresponding admin classes
 admin.site.register(Course, CourseAdmin)

@@ -1,15 +1,44 @@
 "use client";
 import gsap from "gsap";
 import Image from "next/image";
-import Link from "next/link";
-
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react"; 
 import { useRouter } from "next/navigation";
+
 export default function HeroFour() {
   const router = useRouter();
+  const [courseName, setCourseName] = useState(""); // State to store the course name input
+  const [loading, setLoading] = useState(false); // State to handle loading state
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Redirect to the course detail page based on the course name
+    fetchCourseIdByName(courseName);
   };
+
+  // Function to fetch course ID based on course name
+  const fetchCourseIdByName = async (courseName) => {
+    setLoading(true); // Set loading state to true
+    try {
+      const response = await fetch(`http://localhost:8000/api/courses/by-name/?name=${courseName}`);
+      
+      if (!response.ok) {
+        throw new Error("Failed to fetch course ID");
+      }
+
+      const data = await response.json();
+      if (data && data.length > 0 && data[0].id) { // Check if data is an array and has an ID
+        router.push(`/courses/${data[0].id}`); // Redirect to the course detail page
+      } else {
+        alert("Course not found");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred while searching for the course");
+    } finally {
+      setLoading(false); // Reset loading state
+    }
+  };
+
   useEffect(() => {
     const parallaxIt = () => {
       const target = document.querySelectorAll(".js-mouse-move-container");
@@ -40,6 +69,7 @@ export default function HeroFour() {
 
     parallaxIt();
   }, []);
+
   return (
     <section className="masthead -type-3 bg-light-6 js-mouse-move-container">
       <div className="container">
@@ -52,7 +82,6 @@ export default function HeroFour() {
             <div className="masthead__content pl-32 lg:pl-0">
               <h1 className="masthead__title">
                 Your Pursuit of <span className="text-purple-1">IT Excellence</span> starts here -
-                
               </h1>
 
               <p className="masthead__text text-17 text-dark-1 mt-25">
@@ -68,20 +97,26 @@ export default function HeroFour() {
                       required
                       type="text"
                       placeholder="What do you want to learn today?"
+                      value={courseName} // Bind the input value to state
+                      onChange={(e) => setCourseName(e.target.value)} // Update state on input change
                     />
 
                     <button
                       className="button -purple-1 text-white"
-                      onClick={() => router.push("/courses")}
+                      type="submit" // Change button type to submit
+                      disabled={loading} // Disable the button if loading
                     >
-                      <i className="icon icon-search"></i>
+                      {loading ? (
+                        <i className="icon icon-loading"></i> // Loading icon
+                      ) : (
+                        <i className="icon icon-search"></i>
+                      )}
                     </button>
                   </form>
                 </div>
 
                 <div className="masthead-search__searches mt-40">
                   <p>Trending Search: az900, azure devops certification, ethical hacking course, </p>
-                  
                 </div>
               </div>
             </div>

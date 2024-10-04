@@ -45,24 +45,21 @@ export default function Overview({ data }) {
 
       <div className="mt-60">
         <h4 className="text-20 mb-30">What you'll learn</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
-          {Array.isArray(learnList) && learnList.length > 0 ? (
-            learnList.map((elm, i) => (
-              <div key={i} className="flex items-center">
-                <div className="flex justify-center items-center border-light rounded-full w-5 h-5 mr-3">
-                  <FontAwesomeIcon
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5 list-disc list-inside">
+          {/* Split learnList by \r\n and map to display each item as a bullet point */}
+
+          {learnList.split("\r\n").map((item, index) => (
+            <li key={index} className="ml-5">
+              <FontAwesomeIcon
                     icon={faCheck}
                     style={{ transform: "scale(0.7)", opacity: "0.7" }}
                   />
-                </div>
-                <p>{elm}</p>
-              </div>
-            ))
-          ) : (
-            <p>No learning items available.</p>
-          )}
-        </div>
+                  {item}
+                  </li>
+          ))}
+        </ul>
       </div>
+
 
       <div className="mt-60">
         <h4 className="text-20">Requirements</h4>

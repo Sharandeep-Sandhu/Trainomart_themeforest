@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .serializers import CourseSerializer, BlogSerializer, LeadSerializer, StudentsSerializer
+from .serializers import CourseSerializer, BlogSerializer, LeadSerializer, StudentsSerializer, ContactMessageSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Course, Blog, Leads, Students
+from .models import Course, Blog, Leads, Students, ContactMessage
 from django.shortcuts import get_object_or_404
 from rest_framework import filters, status
+from rest_framework.decorators import api_view
 # Create your views here.
 
 
@@ -43,6 +44,22 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = CourseSerializer(course)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    
+    @action(detail=False, methods=['get'], url_path='by-name')
+    def get_course_by_name(self, request):
+        """Get course by name"""
+        course_name = request.query_params.get('name', None)
+        if course_name:
+            # Filtering by course name
+            courses = Course.objects.filter(course_name__iexact=course_name)
+            if courses.exists():
+                serializer = self.get_serializer(courses, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({'error': 'Course not found'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'No course name provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+    
+    
 class BlogViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
@@ -61,6 +78,18 @@ class LeadViewSet(viewsets.ModelViewSet):
 class StudentsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Students.objects.all()
     serializer_class = StudentsSerializer
+
+class ContactMessageViewSet(viewsets.ModelViewSet):
+    queryset = ContactMessage.objects.all()
+    serializer_class = ContactMessageSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 def index(request):
     return HttpResponse("Hello, world. You're at the trainomart index.")
