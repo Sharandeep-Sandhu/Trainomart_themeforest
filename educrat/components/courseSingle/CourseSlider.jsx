@@ -14,7 +14,7 @@ export default function CourseSlider() {
   }, []);
   return (
     <section className="layout-pt-md layout-pb-lg">
-      <div className="container">
+      {/* <div className="container">
         <div className="row">
           <div className="col-auto">
             <div className="sectionTitle ">
@@ -179,7 +179,7 @@ export default function CourseSlider() {
             <i className="icon icon-arrow-right text-24"></i>
           </button>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

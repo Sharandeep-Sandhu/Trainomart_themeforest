@@ -4,11 +4,27 @@ import React, { useState, useEffect } from "react";
 import { useContextElement } from "@/context/Context";
 import ModalVideoComponent from "../common/ModalVideo";
 import Image from "next/image";
+
 export default function PinContent({ pageItem }) {
   const { isAddedToCartCourses, addCourseToCart } = useContextElement();
   const [isOpen, setIsOpen] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  // useEffect hook to update the screen width when the window is resized
+  const [screenWidth, setScreenWidth] = useState(0);
+
+  // Define form data state
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  const [isLoading, setIsLoading] = useState(false); // Define isLoading state
+
+  // Initialize screenWidth to window.innerWidth on mount
+  useEffect(() => {
+    setScreenWidth(window.innerWidth);
+  }, []);
+
+  // Update screen width on window resize
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -21,6 +37,43 @@ export default function PinContent({ pageItem }) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // Handle form input changes
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true); // Set loading to true when the form is submitted
+
+    try {
+      const response = await fetch('http://localhost:8000/api/leads/', {  // Adjust the URL as needed
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log("Form submitted successfully:", data);
+      setIsLoading(false); // Set loading to false after submission
+      alert("Form submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setIsLoading(false);
+    }
+  };
+
 
   return (
     <>
@@ -41,63 +94,83 @@ export default function PinContent({ pageItem }) {
             <Image
               width={368}
               height={238}
-              className="w-1/1"
-              src={pageItem.imageSrc}
-              alt="image"
+              className="w-full"
+              src={pageItem.course_image || "/default-course.jpg"}
+              alt="Course Image"
+              priority // Optional: Prioritize loading
             />
-            <div className="absolute-full-center d-flex justify-center items-center">
-              <div
-                onClick={() => setIsOpen(true)}
-                className="d-flex justify-center items-center size-60 rounded-full bg-white js-gallery cursor"
-                data-gallery="gallery1"
-              >
-                <div className="icon-play text-18"></div>
-              </div>
-            </div>
           </div>
 
           <div className="courses-single-info__content scroll-bar-1 pt-30 pb-20 px-20">
-            <div className="d-flex justify-between items-center mb-30">
-              {pageItem.paid ? (
-                <>
-                  <div className="text-24 lh-1 text-dark-1 fw-500">
-                    ${pageItem.discountedPrice}
-                  </div>
-                  <div className="lh-1 line-through">
-                    ${pageItem.originalPrice}
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="text-24 lh-1 text-dark-1 fw-500">Free</div>
-                  <div></div>
-                </>
-              )}
-            </div>
+            {/* Form Section */}
 
-            <button
-              className="button -md -purple-1 text-white w-1/1"
-              onClick={() => addCourseToCart(pageItem.id)}
-            >
-              {isAddedToCartCourses(pageItem.id)
-                ? "Already Added"
-                : "Add To Cart"}
-            </button>
-            <button className="button -md -outline-dark-1 text-dark-1 w-1/1 mt-10">
-              Buy Now
-            </button>
+            <h2 className="text-center">Register Now</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="flex space-x-4"> {/* Flex container for horizontal alignment */}
+                <div className="flex-1"> {/* Flex item for Name */}
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Your Name"
+                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  />
+                </div>
+                <div className="flex-1"> {/* Flex item for Phone Number */}
+                  <input
+                    id="phone_number"
+                    name="phone_number"
+                    type="tel"
+                    value={formData.phone_number}
+                    onChange={handleChange}
+                    required
+                    placeholder="Your Phone Number"
+                    className="w-full p-3 rounded-md focus:outline-none focus:ring-0 border-0 border-hidden"
+                  />
+                </div>
 
-            <div className="text-14 lh-1 text-center mt-30">
-              30-Day Money-Back Guarantee
-            </div>
+              </div>
+
+              <div className="flex-1"> {/* Email input below Name and Phone Number */}
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  placeholder="Your Email Address"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="text-24 leading-none text-right text-dark-1 font-bold">
+                {pageItem.price}
+              </div>
+
+              <button
+                type="submit"
+                className="button -md -outline-dark-1 text-dark-1 w-1/1 mt-10"
+                disabled={isLoading} // Disable button when loading
+              >
+                {isLoading ? "Submitting..." : "Buy Now"}
+              </button>
+            </form>
+
+
+
+
 
             <div className="mt-25">
               <div className="d-flex justify-between py-8 ">
                 <div className="d-flex items-center text-dark-1">
                   <div className="icon-video-file"></div>
-                  <div className="ml-10">Lessons</div>
+                  <div className="ml-8">Lessons</div>
                 </div>
-                <div>20</div>
+                <div>{pageItem.Lessons || 20}</div>
               </div>
 
               <div className="d-flex justify-between py-8 border-top-light">
@@ -105,7 +178,7 @@ export default function PinContent({ pageItem }) {
                   <div className="icon-puzzle"></div>
                   <div className="ml-10">Quizzes</div>
                 </div>
-                <div>3</div>
+                <div>{pageItem.quizzes || 3}</div>
               </div>
 
               <div className="d-flex justify-between py-8 border-top-light">
@@ -113,7 +186,7 @@ export default function PinContent({ pageItem }) {
                   <div className="icon-clock-2"></div>
                   <div className="ml-10">Duration</div>
                 </div>
-                <div>13 Hours</div>
+                <div>{pageItem.duration || "13 Hours"}</div>
               </div>
 
               <div className="d-flex justify-between py-8 border-top-light">
@@ -121,7 +194,7 @@ export default function PinContent({ pageItem }) {
                   <div className="icon-bar-chart-2"></div>
                   <div className="ml-10">Skill level</div>
                 </div>
-                <div>Beginner</div>
+                <div>{pageItem.skill_level || "Beginner"}</div>
               </div>
 
               <div className="d-flex justify-between py-8 border-top-light">
@@ -129,23 +202,7 @@ export default function PinContent({ pageItem }) {
                   <div className="icon-translate"></div>
                   <div className="ml-10">Language</div>
                 </div>
-                <div>English</div>
-              </div>
-
-              <div className="d-flex justify-between py-8 border-top-light">
-                <div className="d-flex items-center text-dark-1">
-                  <div className="icon-badge"></div>
-                  <div className="ml-10">Certificate</div>
-                </div>
-                <div>Yes</div>
-              </div>
-
-              <div className="d-flex justify-between py-8 border-top-light">
-                <div className="d-flex items-center text-dark-1">
-                  <div className="icon-infinity"></div>
-                  <div className="ml-10">Full lifetime access</div>
-                </div>
-                <div>Yes</div>
+                <div>{pageItem.language || "English"}</div>
               </div>
             </div>
 

@@ -32,6 +32,7 @@
     "react-calendar": "^4.3.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
+    "react-modal": "^3.16.1",
     "react-modal-video": "^2.0.1",
     "react-particles": "^2.10.1",
     "recharts": "^2.7.2",

@@ -7,6 +7,9 @@ class Course(models.Model):
     course_image = models.ImageField(upload_to='courses/')  # Ensure you have Pillow installed
     description = models.TextField()
     course_content = models.TextField()
+    learnList = models.TextField()
+    Lessons = models.TextField()
+    category = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     duration = models.DurationField(help_text="Enter the duration of the course (in HH:MM:SS format).")
     language = models.CharField(max_length=100)
@@ -35,3 +38,12 @@ class Leads(models.Model):
 
     def __str__(self):
         return self.name
+
+class Students(models.Model):
+    student_name = models.CharField(max_length=255)
+    student_mail = models.CharField(max_length=50) 
+    student_phone = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.student_name
+    

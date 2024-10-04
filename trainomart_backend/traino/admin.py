@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import Course, Blog, Leads
+from .models import Course, Blog, Leads, Students
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('course_name', 'price', 'duration', 'is_featured', 'last_updated')
     list_filter = ('is_featured', 'language', 'skill_level')
     search_fields = ('course_name', 'description')
     ordering = ('last_updated',)
-    fields = ('course_name', 'course_image', 'description', 'course_content', 'price', 'duration', 'language', 'skill_level')
+    fields = ('course_name', 'course_image', 'description', 'course_content', 'learnList', 'Lessons', 'category', 'price', 'duration', 'language', 'skill_level', 'is_featured')
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('blog_title', 'blog_image')
@@ -14,6 +14,11 @@ class BlogAdmin(admin.ModelAdmin):
     ordering = ('blog_title',)
     fields = ('blog_title', 'blog_image', 'blog_data')
 
+class StudentsAdmin(admin.ModelAdmin):
+    list_display = ('student_name', 'student_mail', 'student_phone')
+    search_fields = ('student_name',)
+    ordering = ('student_name',)
+    fields = ('student_name', 'student_mail', 'student_phone')
 class LeadsAdmin(admin.ModelAdmin):
     list_display = ('name', 'phone_number', 'email', 'payment_status')
     list_filter = ('payment_status',)
@@ -25,3 +30,5 @@ class LeadsAdmin(admin.ModelAdmin):
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Leads, LeadsAdmin)
+admin.site.register(Students, StudentsAdmin)
+
