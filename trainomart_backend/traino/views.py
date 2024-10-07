@@ -91,7 +91,7 @@ class ContactMessageViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CreatePayment(APIView):
+# class CreatePayment(APIView):
     def post(self, request):
         serializer = PaymentSerializer(data=request.data)
         if serializer.is_valid():
@@ -148,21 +148,21 @@ class CreatePayment(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class WebhookHandler(APIView):
-    def post(self, request):
-        # Handle webhook data from Wise
-        # Verify the webhook signature if provided
-        data = request.data
-        payment_id = data.get('transferUuid')
-        status_update = data.get('status')
+# class WebhookHandler(APIView):
+#     def post(self, request):
+#         # Handle webhook data from Wise
+#         # Verify the webhook signature if provided
+#         data = request.data
+#         payment_id = data.get('transferUuid')
+#         status_update = data.get('status')
 
-        try:
-            payment = Payment.objects.get(payment_id=payment_id)
-            payment.status = status_update
-            payment.save()
-            return Response({"message": "Payment status updated."}, status=status.HTTP_200_OK)
-        except Payment.DoesNotExist:
-            return Response({"error": "Payment not found."}, status=status.HTTP_404_NOT_FOUND)
+#         try:
+#             payment = Payment.objects.get(payment_id=payment_id)
+#             payment.status = status_update
+#             payment.save()
+#             return Response({"message": "Payment status updated."}, status=status.HTTP_200_OK)
+#         except Payment.DoesNotExist:
+#             return Response({"error": "Payment not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
 def index(request):
