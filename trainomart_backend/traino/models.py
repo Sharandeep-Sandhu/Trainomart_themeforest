@@ -5,14 +5,15 @@ from django.db import models
 class Course(models.Model):
     course_name = models.CharField(max_length=255)
     course_image = models.ImageField(upload_to='courses/')  # Ensure you have Pillow installed
-    description = models.TextField()
-    course_content = models.TextField()
-    learnList = models.TextField()
-    Lessons = models.TextField()
-    category = models.TextField()
-    Requirements = models.TextField()
+    description = models.TextField(max_length=500000)
+    course_content = models.TextField(max_length=500000)
+    you_will_learn_list = models.TextField(max_length=500000)
+    Lessons = models.TextField(max_length=500000)
+    category = models.TextField(max_length=500000)
+    Requirements = models.TextField(max_length=500000)
+    orignal_price = models.DecimalField(max_digits=10, decimal_places=2)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    duration = models.DurationField(help_text="Enter the duration of the course (in HH:MM:SS format).")
+    duration = models.TextField(help_text="Enter the duration of the course")
     language = models.CharField(max_length=100)
     skill_level = models.CharField(max_length=50, choices=[('beginner', 'Beginner'), ('intermediate', 'Intermediate'), ('advanced', 'Advanced')])
     last_updated = models.DateTimeField(auto_now=True)  # Automatically set to now every time the object is saved
@@ -56,3 +57,14 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"Message from {self.name}"
+    
+class Payment(models.Model):
+    payment_id = models.CharField(max_length=100, unique=True)
+    user_email = models.EmailField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    currency = models.CharField(max_length=10)
+    status = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Payment {self.payment_id} - {self.status}"

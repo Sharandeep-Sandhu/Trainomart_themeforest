@@ -12,9 +12,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
+
+# WISE_API_TOKEN = config('a0bb7144-46e6-40cf-bd0e-6ae43447248c')
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -89,7 +92,7 @@ WSGI_APPLICATION = 'trainomart_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'trainomart', 
+        'NAME': 'postgres', 
         'USER': 'postgres',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1', 

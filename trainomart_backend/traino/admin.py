@@ -2,11 +2,26 @@ from django.contrib import admin
 from .models import Course, Blog, Leads, Students, ContactMessage
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('course_name', 'price', 'duration', 'is_featured', 'last_updated')
+    list_display = ('course_name', 'you_will_learn_list', 'orignal_price', 'price', 'duration', 'is_featured', 'last_updated')
     list_filter = ('is_featured', 'language', 'skill_level')
     search_fields = ('course_name', 'description')
     ordering = ('last_updated',)
-    fields = ('course_name', 'course_image', 'description', 'course_content', 'learnList', 'Lessons', 'Requirements', 'category', 'price', 'duration', 'language', 'skill_level', 'is_featured')
+    fields = (
+        'course_name',
+        'course_image',
+        'description',
+        'course_content',
+        'you_will_learn_list',  # Update this line
+        'Lessons',
+        'Requirements',
+        'category',
+        'price',
+        'orignal_price',
+        'duration',
+        'language',
+        'skill_level',
+        'is_featured',
+    )
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('blog_title', 'blog_image')

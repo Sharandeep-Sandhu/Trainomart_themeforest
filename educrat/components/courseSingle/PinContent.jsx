@@ -106,7 +106,7 @@ export default function PinContent({ pageItem }) {
 
             <h2 className="text-center">Register Now</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="flex space-x-4"> {/* Flex container for horizontal alignment */}
+              <div className="flex flex-col md:flex-row md:space-x-4"> {/* Flex container for responsive alignment */}
                 <div className="flex-1"> {/* Flex item for Name */}
                   <input
                     id="name"
@@ -116,25 +116,26 @@ export default function PinContent({ pageItem }) {
                     onChange={handleChange}
                     required
                     placeholder="Your Name"
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    className="w-full p-3 border-none border-b-2 border-red-500 focus:border-indigo-500 focus:ring-0 focus:outline-none transition-colors duration-300 border-b-2"
                   />
                 </div>
                 <div className="flex-1"> {/* Flex item for Phone Number */}
                   <input
                     id="phone_number"
                     name="phone_number"
-                    type="tel"
+                    type="text"
                     value={formData.phone_number}
                     onChange={handleChange}
                     required
                     placeholder="Your Phone Number"
-                    className="w-full p-3 rounded-md focus:outline-none focus:ring-0 border-0 border-hidden"
+                    className="w-full p-3 border-none border-b-2 border-red-500 focus:border-indigo-500 focus:ring-0 focus:outline-none transition-colors duration-300"
                   />
                 </div>
-
               </div>
 
+
               <div className="flex-1"> {/* Email input below Name and Phone Number */}
+                
                 <input
                   id="email"
                   name="email"
@@ -143,13 +144,14 @@ export default function PinContent({ pageItem }) {
                   onChange={handleChange}
                   required
                   placeholder="Your Email Address"
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  className="w-full p-3 border-none border-b-2 border-red-500 focus:border-indigo-500 focus:ring-0 focus:outline-none transition-colors duration-300"
                 />
               </div>
 
               <div className="text-24 leading-none text-right text-dark-1 font-bold">
-                {pageItem.price}
+              <span className="line-through text-left inline-block">${pageItem.orignal_price}</span> ${pageItem.price}
               </div>
+              
 
               <button
                 type="submit"
@@ -173,13 +175,13 @@ export default function PinContent({ pageItem }) {
                 <div>{pageItem.Lessons || 20}</div>
               </div>
 
-              <div className="d-flex justify-between py-8 border-top-light">
+              {/* <div className="d-flex justify-between py-8 border-top-light">
                 <div className="d-flex items-center text-dark-1">
                   <div className="icon-puzzle"></div>
                   <div className="ml-10">Quizzes</div>
                 </div>
                 <div>{pageItem.quizzes || 3}</div>
-              </div>
+              </div> */}
 
               <div className="d-flex justify-between py-8 border-top-light">
                 <div className="d-flex items-center text-dark-1">

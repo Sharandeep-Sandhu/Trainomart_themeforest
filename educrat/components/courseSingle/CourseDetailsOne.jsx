@@ -129,9 +129,9 @@ export default function CourseDetailsOne({ id }) {
                     </h1>
                   </div>
 
-                  <p className="col-xl-9 mt-20">
+                  {/* <p className="col-xl-9 mt-20">
                     {pageItem.description || "No description available."}
-                  </p>
+                  </p> */}
 
                   <div className="d-flex x-gap-30 y-gap-10 items-center flex-wrap pt-20">
                     {/* <div className="d-flex items-center">
@@ -149,7 +149,7 @@ export default function CourseDetailsOne({ id }) {
                     <div className="d-flex items-center text-light-1">
                       <div className="icon icon-person-3 text-13"></div>
                       <div className="text-14 ml-8">
-                        {/* {pageItem.enrolledCount || 0} enrolled on this course */}
+                        {pageItem.duration || 0} Duration of this course
                       </div>
                     </div>
 
@@ -168,7 +168,7 @@ export default function CourseDetailsOne({ id }) {
                     </div>
                   </div>
 
-                  <div className="d-flex items-center pt-20">
+                  {/* <div className="d-flex items-center pt-20">
                     <div className="relative w-30 h-30 rounded-full overflow-hidden">
                       <Image
                         src={pageItem.course_image || "/default-author.jpg"}
@@ -180,9 +180,9 @@ export default function CourseDetailsOne({ id }) {
                       />
                     </div>
                     <div className="text-14 lh-1 ml-10">
-                      {/* {pageItem.authorName || "Instructor Name"} */}
+                      {pageItem.authorName || "Instructor Name"}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
