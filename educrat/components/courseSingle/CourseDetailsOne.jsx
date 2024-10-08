@@ -28,7 +28,7 @@ export default function CourseDetailsOne({ id }) {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`http://localhost:8000/api/courses/${id}`);
+        const response = await fetch(`http://13.233.33.247/api/courses/${id}`);
 
         if (!response.ok) {
           throw new Error(`Error fetching course data: ${response.statusText}`);

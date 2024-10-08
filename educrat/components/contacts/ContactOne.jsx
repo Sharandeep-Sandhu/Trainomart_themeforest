@@ -27,7 +27,7 @@ export default function ContactOne() {
     // Perform validation if needed
 
     // Send data to the backend
-    const response = await fetch('http://localhost:8000/api/contact/', {
+    const response = await fetch('http://13.233.33.247/api/contact/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

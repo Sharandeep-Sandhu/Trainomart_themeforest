@@ -17,7 +17,7 @@ export default function Courses() {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch("http://localhost:8000/api/courses"); // Replace with your API URL
+        const response = await fetch("http://13.233.33.247/api/courses"); // Replace with your API URL
         if (!response.ok) {
           throw new Error("Failed to fetch courses data");
         }

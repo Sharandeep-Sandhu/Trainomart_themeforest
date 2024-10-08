@@ -26,8 +26,10 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-o_gpi0!&txks(kp1=ubae
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('.vercel.app', '.now.sh').split(',')
+ALLOWED_HOSTS = ['.vercel.app']
 
+if DEBUG:
+    ALLOWED_HOSTS += ['localhost', '127.0.0.1']
 
 # Application definition
 
@@ -137,6 +139,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CORS_ORIGIN_ALLOW_ALL = False  # Set to False for security in production
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://13.233.33.247",
+    "https://your-production-domain.vercel.app",
+    "https://your-production-domain.now.sh",
     # Add other origins if needed
 ]
 
@@ -144,9 +149,6 @@ CORS_ALLOWED_ORIGINS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Stripe (if used)
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='your-stripe-secret-key')
 
 # Wise API Token
 WISE_API_TOKEN = config('WISE_API_TOKEN', default='your-wise-api-token')

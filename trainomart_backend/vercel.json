@@ -1,27 +1,30 @@
 {
     "version": 2,
     "builds": [
-      {
-        "src": "traino/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-      },
-      {
-        "src": "build_files.sh",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "staticfiles"
+        {
+            "src": "trainomart_backend/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "50mb"
+            }
         }
-      }
     ],
     "routes": [
-      {
-        "src": "/static/(.*)",
-        "dest": "/static/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "traino/wsgi.py"
-      }
-    ]
-  }
+        {
+            "src": "/api/(.*)",
+            "dest": "trainomart_backend/wsgi.py" // Route API calls to your WSGI file
+        }
+    ],
+    "env": {
+        "DJANGO_SETTINGS_MODULE": "trainomart_backend.settings",
+        "SECRET_KEY": "@secret_key",
+        "DEBUG": "@debug",
+        "DB_NAME": "@db_name",
+        "DB_USER": "@db_user",
+        "DB_PASSWORD": "@db_password",
+        "DB_HOST": "@db_host",
+        "DB_PORT": "@db_port",
+        "WISE_API_TOKEN": "@wise_api_token",
+        "ALLOWED_HOSTS": "@allowed_hosts"
+    }
+}

@@ -19,7 +19,7 @@ export default function HeroFour() {
   const fetchCourseIdByName = async (courseName) => {
     setLoading(true); // Set loading state to true
     try {
-      const response = await fetch(`http://localhost:8000/api/courses/by-name/?name=${courseName}`);
+      const response = await fetch(`http://13.233.33.247/api/courses/by-name/?name=${courseName}`);
       
       if (!response.ok) {
         throw new Error("Failed to fetch course ID");

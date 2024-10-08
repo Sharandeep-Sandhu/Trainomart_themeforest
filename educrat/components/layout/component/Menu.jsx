@@ -21,7 +21,7 @@ export default function Menu({ allClasses, headerPosition }) {
     // Fetch the first five courses from the API
     const fetchCourses = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/courses/limited/?limit=5"); // Corrected URL
+        const response = await fetch("http://13.233.33.247/api/courses/limited/?limit=5"); // Corrected URL
         if (!response.ok) {
           throw new Error("Failed to fetch courses.");
         }

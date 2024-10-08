@@ -52,7 +52,7 @@ export default function PinContent({ pageItem }) {
     setIsLoading(true); // Set loading to true when the form is submitted
 
     try {
-      const response = await fetch('http://localhost:8000/api/leads/', {  // Adjust the URL as needed
+      const response = await fetch('http://13.233.33.247/api/leads/', {  // Adjust the URL as needed
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
