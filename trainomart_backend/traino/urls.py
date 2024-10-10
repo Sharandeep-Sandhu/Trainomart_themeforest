@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import CourseViewSet, BlogViewSet, LeadViewSet, StudentsViewSet, ContactMessageViewSet
+from .views import CourseViewSet, BlogViewSet, LeadViewSet, StudentsViewSet, ContactMessageViewSet, wise_webhook, CreatePaymentQuote, CreatePaymentTransfer
 from . import views
 
 router = DefaultRouter()
@@ -16,4 +16,7 @@ router.register(r'contact', ContactMessageViewSet)
 urlpatterns = [
     path("", views.index, name="index"),
     path('api/', include(router.urls)),
+    path('api/create-quote/', CreatePaymentQuote.as_view(), name='create-quote'),
+    path('api/create-transfer/', CreatePaymentTransfer.as_view(), name='create-transfer'),
+    path('api/webhook/', wise_webhook, name='wise-webhook'),
 ]

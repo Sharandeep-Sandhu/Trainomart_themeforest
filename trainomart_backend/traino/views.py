@@ -8,6 +8,10 @@ from .models import Course, Blog, Leads, Students, ContactMessage, Payment
 from django.shortcuts import get_object_or_404
 from rest_framework import filters, status
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from .wise_service import create_quote, create_transfer
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 # Create your views here.
 
@@ -91,79 +95,39 @@ class ContactMessageViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class CreatePayment(APIView):
+class CreatePaymentQuote(APIView):
     def post(self, request):
-        serializer = PaymentSerializer(data=request.data)
-        if serializer.is_valid():
-            user_email = serializer.validated_data['user_email']
-            amount = serializer.validated_data['amount']
-            currency = serializer.validated_data['currency']
+        source_currency = request.data.get('sourceCurrency')
+        target_currency = request.data.get('targetCurrency')
+        source_amount = request.data.get('sourceAmount')
 
-            # Create a transfer quote
-            quote_url = 'https://api.sandbox.transferwise.com/v1/quotes'
-            quote_data = {
-                "sourceCurrency": "USD",  # Replace with your source currency
-                "targetCurrency": currency,
-                "sourceAmount": float(amount),
-                "type": "BALANCE_PAYOUT",
-            }
-            headers = {
-                'Authorization': f'Bearer {settings.WISE_API_TOKEN}',
-                'Content-Type': 'application/json',
-            }
-            quote_response = requests.post(quote_url, json=quote_data, headers=headers)
-            if quote_response.status_code != 201:
-                return Response({"error": "Failed to create quote."}, status=status.HTTP_400_BAD_REQUEST)
-            quote = quote_response.json()
+        try:
+            quote = create_quote(source_currency, target_currency, source_amount)
+            return Response(quote, status=status.HTTP_201_CREATED)
+        except requests.HTTPError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Create a transfer
-            transfer_url = 'https://api.sandbox.transferwise.com/v1/transfers'
-            transfer_data = {
-                "targetAccount": "your_target_account_id",  # Replace with your target account ID
-                "quoteUuid": quote['id'],
-                "customerTransactionId": "unique_transaction_id",  # Generate unique ID
-                "details": {
-                    "reference": "Payment for Order #1234",
-                    "transferPurpose": "verification.transfers.purpose.pay bills",  # Adjust as needed
-                }
-            }
-            transfer_response = requests.post(transfer_url, json=transfer_data, headers=headers)
-            if transfer_response.status_code != 201:
-                return Response({"error": "Failed to create transfer."}, status=status.HTTP_400_BAD_REQUEST)
-            transfer = transfer_response.json()
+class CreatePaymentTransfer(APIView):
+    def post(self, request):
+        profile_id = request.data.get('profileId')
+        quote_id = request.data.get('quoteId')
+        target_account_id = request.data.get('targetAccountId')
+        customer_transaction_id = request.data.get('customerTransactionId')
 
-            # Fund the transfer if needed (depends on Wise API setup)
-            # This step may vary based on your account setup
+        try:
+            transfer = create_transfer(profile_id, quote_id, target_account_id, customer_transaction_id)
+            return Response(transfer, status=status.HTTP_201_CREATED)
+        except requests.HTTPError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Save to database
-            payment = Payment.objects.create(
-                payment_id=transfer['id'],
-                user_email=user_email,
-                amount=amount,
-                currency=currency,
-                status=transfer['status'],
-            )
-
-            return Response({"payment_id": payment.payment_id, "status": payment.status}, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# class WebhookHandler(APIView):
-#     def post(self, request):
-#         # Handle webhook data from Wise
-#         # Verify the webhook signature if provided
-#         data = request.data
-#         payment_id = data.get('transferUuid')
-#         status_update = data.get('status')
-
-#         try:
-#             payment = Payment.objects.get(payment_id=payment_id)
-#             payment.status = status_update
-#             payment.save()
-#             return Response({"message": "Payment status updated."}, status=status.HTTP_200_OK)
-#         except Payment.DoesNotExist:
-#             return Response({"error": "Payment not found."}, status=status.HTTP_404_NOT_FOUND)
-
+@csrf_exempt
+def wise_webhook(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        # Process webhook data
+        # e.g., update transfer status in your database
+        return HttpResponse(status=200)
+    return HttpResponse(status=405)
 
 def index(request):
     return HttpResponse("Hello, world. You're at the trainomart index.")
