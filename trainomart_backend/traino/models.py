@@ -41,6 +41,16 @@ class Leads(models.Model):
     def __str__(self):
         return self.name
 
+class BusinessLeads(models.Model):
+    name = models.CharField(max_length=100)
+    organization = models.CharField(max_length=100)
+    designation = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.name
+
 class Students(models.Model):
     student_name = models.CharField(max_length=255)
     student_mail = models.CharField(max_length=50) 

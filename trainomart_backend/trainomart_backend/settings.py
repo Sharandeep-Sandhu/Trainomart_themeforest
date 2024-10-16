@@ -151,6 +151,6 @@ CORS_ALLOWED_ORIGINS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Wise API Token
-WISE_API_TOKEN = config('WISE_API_TOKEN', default='your-wise-api-token')
+WISE_API_TOKEN = config('WISE_API_TOKEN', default='a0bb7144-46e6-40cf-bd0e-6ae43447248c')
 
 # Additional configurations...

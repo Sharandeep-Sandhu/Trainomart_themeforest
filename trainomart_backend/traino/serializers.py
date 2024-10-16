@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course, Blog, Leads, Students, ContactMessage
+from .models import Course, Blog, Leads, Students, ContactMessage, BusinessLeads
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,3 +31,8 @@ class PaymentSerializer(serializers.Serializer):
     user_email = serializers.EmailField()
     amount = serializers.DecimalField(max_digits=10, decimal_places=2)
     currency = serializers.CharField(max_length=10)
+    
+class BusinessLeadsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessLeads
+        fields = '__all__'

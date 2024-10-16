@@ -252,39 +252,39 @@ export const topCatagoriesSix = [
   {
     id: 1,
     icon: "icon-architecture text-40",
-    title: "Design Creative",
+    title: "Microsoft",
     courses: 573,
   },
   {
     id: 2,
     icon: "icon-megaphone text-40",
-    title: "Sales Marketing",
+    title: "CompTIA",
     courses: 565,
   },
   {
     id: 3,
     icon: "icon-save-money text-40",
-    title: "Development IT",
+    title: "Google Cloud",
     courses: 126,
   },
   {
     id: 4,
     icon: "icon-software text-40",
-    title: "Engineering Architecture",
+    title: "AWS",
     courses: 35,
   },
-  {
-    id: 5,
-    icon: "icon-tools text-40",
-    title: "Personal Development",
-    courses: 908,
-  },
-  {
-    id: 6,
-    icon: "icon-person-2 text-40",
-    title: "Finance Accounting",
-    courses: 129,
-  },
+  // {
+  //   id: 5,
+  //   icon: "icon-tools text-40",
+  //   title: "Personal Development",
+  //   courses: 908,
+  // },
+  // {
+  //   id: 6,
+  //   icon: "icon-person-2 text-40",
+  //   title: "Finance Accounting",
+  //   courses: 129,
+  // },
 ];
 
 export const topCatagoriesSeven = [

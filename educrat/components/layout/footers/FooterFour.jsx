@@ -41,7 +41,7 @@ export default function FooterFour() {
           <div className="row y-gap-30">
             <FooterLinks allClasses="text-17 fw-500 uppercase mb-25" />
 
-            <div className="col-xl-4 ol-md-4 col-sm-6">
+            {/* <div className="col-xl-4 ol-md-4 col-sm-6">
               <div className="text-17 fw-500 uppercase mb-25">GET IN TOUCH</div>
               <div className="footer-columns-form">
                 <div>We don’t send spam so don’t worry.</div>
@@ -52,7 +52,7 @@ export default function FooterFour() {
                   </div>
                 </form>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -60,7 +60,7 @@ export default function FooterFour() {
           <div className="row justify-between y-gap-20">
             <div className="col-md-6">
               <div className="footer-footer__copyright">
-                © {new Date().getFullYear()} Educrat. All Right Reserved.
+                © {new Date().getFullYear()} XcodeTech LLC. All Right Reserved.
               </div>
             </div>
 

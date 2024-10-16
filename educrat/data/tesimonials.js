@@ -38,6 +38,67 @@ export const testimonials = [
   // },
 ];
 
+export const testimonials2 = [
+  {
+    id: 0,
+    imageSrc: "/assets/img/clients/microsoft.png",
+    name: "",
+    position: "",
+    comment: "400+ Instructors",
+    description: ``,
+  },
+  {
+    id: 1,
+    imageSrc: "/assets/img/clients/cisco.png",
+    name: "",
+    position: "",
+    comment: "80+ Instructors",
+    description: ``,
+  },
+  {
+    id: 2,
+    imageSrc: "/assets/img/clients/vmware.png",
+    name: "",
+    position: "",
+    comment: "20+ Instructors",
+    description: ``,
+  },
+  {
+    id: 3,
+    imageSrc: "/assets/img/clients/comptia.png",
+    name: "",
+    position: "",
+    comment: "15+ Instructors",
+    description: ``,
+  },
+  {
+    id: 4,
+    imageSrc: "/assets/img/clients/citrix.png",
+    name: "",
+    position: "",
+    comment: "15+ Instructors",
+    description: ``,
+  },
+  {
+    id: 5,
+    imageSrc: "/assets/img/clients/ec-council.png",
+    name: "",
+    position: "",
+    comment: "15+ Instructors",
+    description: ``,
+  },
+  {
+    id: 6,
+    imageSrc: "/assets/img/clients/aws.png",
+    name: "",
+    position: "",
+    comment: "25+ Instructors",
+    description: ``,
+  },
+];
+
+
+
 export const testimonialsTwo = [
   {
     id: 1,

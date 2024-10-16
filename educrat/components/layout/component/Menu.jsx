@@ -59,9 +59,8 @@ export default function Menu({ allClasses, headerPosition }) {
 
   return (
     <div
-      className={`header-menu js-mobile-menu-toggle ${
-        headerPosition ? headerPosition : ""
-      }`}
+      className={`header-menu js-mobile-menu-toggle ${headerPosition ? headerPosition : ""
+        }`}
     >
       <div className="header-menu__content">
         <div className="mobile-bg js-mobile-bg"></div>
@@ -159,7 +158,9 @@ export default function Menu({ allClasses, headerPosition }) {
                 Contact
               </Link>
             </li>
+
           </ul>
+
         </div>
 
         {/* Mobile Footer */}

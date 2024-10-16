@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .serializers import CourseSerializer, BlogSerializer, LeadSerializer, StudentsSerializer, ContactMessageSerializer, PaymentSerializer
+from .serializers import CourseSerializer, BlogSerializer, LeadSerializer, StudentsSerializer, ContactMessageSerializer, PaymentSerializer, BusinessLeadsSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Course, Blog, Leads, Students, ContactMessage, Payment
+from .models import Course, Blog, Leads, Students, ContactMessage, Payment, BusinessLeads
 from django.shortcuts import get_object_or_404
 from rest_framework import filters, status
 from rest_framework.decorators import api_view
@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 from .wise_service import create_quote, create_transfer
 from django.views.decorators.csrf import csrf_exempt
 import json
+from rest_framework import mixins
 
 # Create your views here.
 
@@ -95,39 +96,10 @@ class ContactMessageViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CreatePaymentQuote(APIView):
-    def post(self, request):
-        source_currency = request.data.get('sourceCurrency')
-        target_currency = request.data.get('targetCurrency')
-        source_amount = request.data.get('sourceAmount')
 
-        try:
-            quote = create_quote(source_currency, target_currency, source_amount)
-            return Response(quote, status=status.HTTP_201_CREATED)
-        except requests.HTTPError as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-class CreatePaymentTransfer(APIView):
-    def post(self, request):
-        profile_id = request.data.get('profileId')
-        quote_id = request.data.get('quoteId')
-        target_account_id = request.data.get('targetAccountId')
-        customer_transaction_id = request.data.get('customerTransactionId')
-
-        try:
-            transfer = create_transfer(profile_id, quote_id, target_account_id, customer_transaction_id)
-            return Response(transfer, status=status.HTTP_201_CREATED)
-        except requests.HTTPError as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-@csrf_exempt
-def wise_webhook(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        # Process webhook data
-        # e.g., update transfer status in your database
-        return HttpResponse(status=200)
-    return HttpResponse(status=405)
+class BusinessLeadsViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    queryset = BusinessLeads.objects.all()
+    serializer_class = BusinessLeadsSerializer
 
 def index(request):
     return HttpResponse("Hello, world. You're at the trainomart index.")

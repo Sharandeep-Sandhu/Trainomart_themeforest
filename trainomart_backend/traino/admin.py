@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Blog, Leads, Students, ContactMessage
+from .models import Course, Blog, Leads, Students, ContactMessage, BusinessLeads
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('course_name', 'you_will_learn_list', 'orignal_price', 'price', 'duration', 'is_featured', 'last_updated')
@@ -41,6 +41,10 @@ class LeadsAdmin(admin.ModelAdmin):
     ordering = ('name',)
     fields = ('name', 'phone_number', 'email', 'payment_status')
 
+
+@admin.register(BusinessLeads)
+class BusinessLeadsAdmin(admin.ModelAdmin):
+    list_display = ('name', 'organization', 'email', 'phone_number')
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):

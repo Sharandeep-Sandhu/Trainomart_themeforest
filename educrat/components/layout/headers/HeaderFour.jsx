@@ -37,6 +37,7 @@ export default function HeaderFour() {
                 setActiveMobileMenu={setActiveMobileMenu}
                 activeMobileMenu={activeMobileMenu}
               />
+
             </div>
           </div>
 
@@ -61,20 +62,16 @@ export default function HeaderFour() {
                 </div>
               </div> */}
 
-              {/* <div className="header-right__buttons d-flex items-center lg:d-none">
-                <a
-                  href="#"
-                  className="button -underline text-dark-1 -before-border py-3 pl-30 xl:pl-20"
+              <div className="header-right__buttons d-flex items-center lg:d-none">
+
+                {/* Business Menu Item */}
+                <Link
+                  href="/business"
+                  
                 >
-                  Log in
-                </a>
-                <a
-                  href="#"
-                  className="button h-50 px-25 -purple-3 -rounded text-purple-1 ml-20"
-                >
-                  Sign up
-                </a>
-              </div> */}
+                  <b>For Businesses</b>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

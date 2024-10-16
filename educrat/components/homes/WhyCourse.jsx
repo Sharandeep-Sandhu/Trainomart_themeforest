@@ -20,7 +20,7 @@ export default function WhyCourse() {
                 data-aos="fade-up"
                 data-aos-duration={800}
               >
-                  Our company excels in premium instructor support services, designed to elevate your training programs with a unique, tailored approach. We enhance your educational initiatives by providing expert instructors who meet your specific training needs.
+                Our company excels in premium instructor support services, designed to elevate your training programs with a unique, tailored approach. We enhance your educational initiatives by providing expert instructors who meet your specific training needs.
               </p>
             </div>
           </div>
@@ -47,6 +47,23 @@ export default function WhyCourse() {
           ))}
         </div>
       </div>
+      <br /><br />
+      <div className="text-center">
+        <a href="/business">
+          <button className="bg-white rounded-[10px]">
+            <h4 className="text-black">Know more</h4>
+          </button>
+          <br />
+          <button className="button -md -purple-1 text-white">
+            Know more
+          </button>
+
+        </a>
+
+
+
+      </div>
+
     </section>
   );
 }

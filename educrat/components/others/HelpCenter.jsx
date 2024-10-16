@@ -10,7 +10,7 @@ export default function HelpCenter() {
   };
   return (
     <>
-      <section className="page-header -type-1">
+      {/* <section className="page-header -type-1">
         <div className="container">
           <div className="page-header__content">
             <div className="row justify-center text-center">
@@ -29,9 +29,9 @@ export default function HelpCenter() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section className="layout-pb-lg">
+      {/* <section className="layout-pb-lg">
         <div className="container">
           <div className="row justify-center text-center">
             <div className="col-xl-6 col-lg-8">
@@ -63,7 +63,7 @@ export default function HelpCenter() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 }
